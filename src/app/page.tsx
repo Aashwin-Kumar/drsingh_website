@@ -21,8 +21,8 @@ import {
 } from "lucide-react";
 
 /* ─── Constants ─── */
-const PHONE_NUMBER = "+91XXXXXXXXXX";
-const WA_NUMBER = "91XXXXXXXXXX";
+const PHONE_NUMBER = "09315354431";
+const WA_NUMBER = "919315354431";
 const WA_MESSAGE = encodeURIComponent(
   "Hi, I want to book an appointment with Dr. Sushrut"
 );
