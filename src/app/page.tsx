@@ -88,7 +88,7 @@ function LandingPage() {
             {/* Text Content */}
             <div className="flex-1 space-y-6 text-center md:text-left animate-fade-in-up">
               <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 text-sm font-bold rounded-full">
-                12+ Years of Excellence
+                #1 Gastroenterologist Clinic Near You · 12+ Years
               </span>
               <h1 className="text-3xl md:text-5xl font-black leading-[1.15] text-slate-900 tracking-tight">
                 Top <span className="text-teal-600">{intent}</span> in {city}
@@ -108,7 +108,7 @@ function LandingPage() {
                 </a>
                 <p className="text-sm text-slate-400">
                   <Star size={14} className="inline mr-1 text-amber-400 fill-amber-400" />
-                  Rated 4.9/5 by 500+ Patients
+                  Rated 4.9/5 by 500+ Patients · Trusted Gastro Clinic in Noida
                 </p>
               </div>
             </div>
@@ -118,9 +118,13 @@ function LandingPage() {
               <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
                 <div className="absolute inset-0 bg-teal-200 rounded-[3rem] rotate-6"></div>
                 <img
-                  src="/images/portrait.jpg"
-                  alt="Dr. Sushrut Singh"
+                  src="/images/portrait.webp"
+                  alt="Dr. Sushrut Singh – Best Gastroenterologist Near Me"
                   className="absolute inset-0 w-full h-full object-cover rounded-[3rem] shadow-2xl border-4 border-white"
+                  width={320}
+                  height={320}
+                  loading="eager"
+                  fetchPriority="high"
                 />
               </div>
               <div className="text-center mt-6">
@@ -166,9 +170,12 @@ function LandingPage() {
 
             <div className="flex-1 w-full">
               <img
-                src="/images/team.jpg"
-                alt="Dr. Sushrut with his team"
+                src="/images/team.webp"
+                alt="Dr. Sushrut Singh Gastroenterology Clinic Team – Noida"
                 className="w-full rounded-[2.5rem] shadow-xl grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
+                width={600}
+                height={450}
+                loading="lazy"
               />
             </div>
           </div>
@@ -181,8 +188,8 @@ function LandingPage() {
       <section className="py-20 px-6 bg-slate-50" id="specialties">
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
-            <h2 className="text-3xl font-bold text-slate-900">Specialized Treatments</h2>
-            <p className="text-slate-500 max-w-lg mx-auto">Providing advanced diagnostic and therapeutic solutions for all gastro-intestinal issues.</p>
+            <h2 className="text-3xl font-bold text-slate-900">Specialized Gastroenterology Treatments</h2>
+            <p className="text-slate-500 max-w-lg mx-auto">Looking for a <strong>gastroenterologist near me</strong>? Our gastro clinic in Noida &amp; Greater Noida offers advanced diagnostic and therapeutic solutions for all gastro-intestinal issues.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -201,9 +208,12 @@ function LandingPage() {
 
             <div className="relative group">
               <img
-                src="/images/procedural.jpg"
-                alt="Endoscopy Procedure"
+                src="/images/procedural.webp"
+                alt="Advanced Endoscopy Procedure – Gastro Clinic Near Me in Noida"
                 className="rounded-[2.5rem] shadow-2xl object-cover h-[400px] w-full"
+                width={600}
+                height={400}
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-teal-900/10 rounded-[2.5rem] group-hover:bg-transparent transition-colors"></div>
             </div>

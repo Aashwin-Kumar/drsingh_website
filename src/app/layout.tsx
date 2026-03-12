@@ -3,18 +3,30 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title:
-    "Dr. Sushrut Singh – Top Gastroenterologist & Liver Specialist in Noida | Book Now",
+    "Best Gastroenterologist Near Me in Noida | Dr. Sushrut Singh – Gastro Clinic Near You",
   description:
-    "Consult Dr. Sushrut Singh, Additional Director – Gastroenterology with 12+ years experience. Expert in Liver Disease, ERCP, EUS & Bariatric Endoscopy. Fortis Hospital Noida & Gaur City Clinic. Book your appointment today.",
+    "Searching for a gastroenterologist near me or a gastro clinic near you in Noida &amp; Greater Noida? Dr. Sushrut Singh (MBBS, MD-KGMC, DM-ILBS) offers expert care for Liver Disease, GERD, IBS, Fatty Liver, ERCP &amp; Bariatric Endoscopy. 12+ years experience at Fortis Hospital Noida &amp; Gaur City Clinic. Book your appointment today.",
   keywords:
-    "gastroenterologist noida, liver specialist noida, dr sushrut singh, ERCP specialist, EUS specialist, bariatric endoscopy, fatty liver treatment, cirrhosis treatment, hepatologist noida",
+    "gastroenterologist near me, gastroenterologist clinic near me, gastro clinic near me, best gastroenterologist in noida, gastroenterologist noida, liver specialist noida, dr sushrut singh, ERCP specialist, EUS specialist, bariatric endoscopy, fatty liver treatment, cirrhosis treatment, hepatologist noida, gastro doctor near me",
   robots: "index, follow",
+  alternates: {
+    canonical: "https://drsingh.com/",
+  },
   openGraph: {
-    title: "Dr. Sushrut Singh – Top Gastroenterologist in Noida",
+    title: "Best Gastroenterologist Near Me – Dr. Sushrut Singh | Gastro Clinic in Noida",
     description:
-      "12+ years experience | MBBS, MD (KGMC), DM (ILBS) | Fortis Hospital Noida",
+      "Looking for a gastroenterologist clinic near you? Dr. Sushrut Singh offers 12+ years of expertise in Liver Disease, ERCP, EUS &amp; Bariatric Endoscopy at Fortis Hospital Noida &amp; Gaur City Clinic.",
     type: "website",
     locale: "en_IN",
+    url: "https://drsingh.com/",
+    images: [
+      {
+        url: "/images/portrait.webp",
+        width: 800,
+        height: 800,
+        alt: "Dr. Sushrut Singh – Best Gastroenterologist Near Me in Noida",
+      },
+    ],
   },
 };
 
@@ -41,6 +53,75 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KKDFT6QM');`,
+          }}
+        />
+        {/* Preload hero image for LCP */}
+        <link
+          rel="preload"
+          href="/images/portrait.webp"
+          as="image"
+          type="image/webp"
+        />
+        {/* Local Business + Physician JSON-LD Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": ["MedicalBusiness", "Physician"],
+              name: "Dr. Sushrut Singh – Gastroenterologist & Liver Specialist",
+              image: "https://drsingh.com/images/portrait.webp",
+              url: "https://drsingh.com/",
+              telephone: "+919315354431",
+              priceRange: "₹₹",
+              description:
+                "Top gastroenterologist clinic near you in Noida & Greater Noida. Dr. Sushrut Singh specialises in Liver Disease, GERD, IBS, Fatty Liver, ERCP, EUS & Bariatric Endoscopy.",
+              medicalSpecialty: "Gastroenterology",
+              address: [
+                {
+                  "@type": "PostalAddress",
+                  streetAddress:
+                    "B-22, Rasoolpur Nawada, D Block, Sector 62",
+                  addressLocality: "Noida",
+                  addressRegion: "Uttar Pradesh",
+                  postalCode: "201301",
+                  addressCountry: "IN",
+                },
+                {
+                  "@type": "PostalAddress",
+                  streetAddress:
+                    "2nd Floor, Shop 215, Aarza Square 2, Gaur City 2 Rd",
+                  addressLocality: "Greater Noida",
+                  addressRegion: "Uttar Pradesh",
+                  postalCode: "201009",
+                  addressCountry: "IN",
+                },
+              ],
+              openingHoursSpecification: [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  dayOfWeek: [
+                    "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday",
+                  ],
+                  opens: "09:00",
+                  closes: "17:30",
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  dayOfWeek: [
+                    "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday",
+                  ],
+                  opens: "18:00",
+                  closes: "21:30",
+                },
+              ],
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.9",
+                reviewCount: "500",
+              },
+              sameAs: [],
+            }),
           }}
         />
       </head>
