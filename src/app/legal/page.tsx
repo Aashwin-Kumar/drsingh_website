@@ -12,7 +12,7 @@ import {
 const PHONE_NUMBER = "09315354431";
 const WA_NUMBER = "919315354431";
 const WA_MESSAGE = encodeURIComponent(
-    "Hi, I want to book an appointment with Dr. Sushrut"
+    "Hi, I'd like to request a Priority Appointment with Dr. Sushrut"
 );
 
 export default function LegalPage() {
