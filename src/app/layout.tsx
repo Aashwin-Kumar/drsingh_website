@@ -1,7 +1,22 @@
 import type { Metadata } from "next";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-plus-jakarta",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://drsingh.com/"),
   title: "Best Gastroenterologist Noida | Gastroenterologist Near Me",
   description:
     "Looking for a gastroenterologist near me? Consult the best gastroenterologist in Noida for fatty liver, GERD, and stomach issues. Call now.",
@@ -45,16 +60,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Google Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
+      <body className={`${inter.variable} ${plusJakartaSans.variable} font-sans antialiased`}>
         {/* Google Tag Manager */}
-        <script
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -63,15 +73,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KKDFT6QM');`,
           }}
         />
-        {/* Preload hero image for LCP */}
+        
+        {/* Preload hero image for LCP - Next.js handles this better with Image component but keeping for safety */}
         <link
           rel="preload"
           href="/images/drProfilepic.webp"
           as="image"
           type="image/webp"
         />
+
         {/* Local Business + Physician JSON-LD Schema */}
-        <script
+        <Script
+          id="structured-data"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -133,7 +146,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
         {/* FAQ Schema for Rich Snippets */}
-        <script
+        <Script
+          id="faq-data"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -192,8 +206,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }),
           }}
         />
-      </head>
-      <body className="antialiased">
+
         {/* GTM noscript fallback */}
         <noscript>
           <iframe

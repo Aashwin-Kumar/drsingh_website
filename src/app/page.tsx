@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
 import {
   Phone,
@@ -267,14 +268,13 @@ function LandingPage() {
             <div className="flex-1 relative animate-scale-in">
               <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
                 <div className="absolute inset-0 bg-teal-200 rounded-[3rem] rotate-6"></div>
-                <img
+                <Image
                   src="/images/drProfilepic.webp"
                   alt="Dr. Sushrut Singh – Best Gastroenterologist in Noida"
                   className="absolute inset-0 w-full h-full object-cover rounded-[3rem] shadow-2xl border-4 border-white"
                   width={320}
                   height={320}
-                  loading="eager"
-                  fetchPriority="high"
+                  priority
                 />
               </div>
               <div className="text-center mt-6">
@@ -470,13 +470,12 @@ function LandingPage() {
             </div>
 
             <div className="flex-1 w-full">
-              <img
+              <Image
                 src="/images/team.webp"
                 alt="Dr. Sushrut Singh Gastroenterology Clinic Team – Noida"
-                className="w-full rounded-[2.5rem] shadow-xl grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
+                className="w-full h-auto rounded-[2.5rem] shadow-xl grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
                 width={600}
                 height={450}
-                loading="lazy"
               />
             </div>
           </div>
@@ -606,13 +605,12 @@ function LandingPage() {
 
           {/* Procedural image */}
           <div className="relative group max-w-2xl mx-auto">
-            <img
+            <Image
               src="/images/procedural.webp"
               alt="Advanced Endoscopy Procedure by Dr. Sushrut Singh – Gastro Clinic in Noida"
-              className="rounded-[2.5rem] shadow-2xl object-cover h-[300px] w-full"
+              className="rounded-[2.5rem] shadow-2xl object-cover w-full h-[300px]"
               width={600}
               height={300}
-              loading="lazy"
             />
             <div className="absolute inset-0 bg-teal-900/10 rounded-[2.5rem] group-hover:bg-transparent transition-colors"></div>
           </div>
