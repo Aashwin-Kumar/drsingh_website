@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title:
-    "Best Gastrologist & Gastroenterologist Near Me in Noida | Dr. Sushrut Singh – Stomach Doctor",
+  title: "Best Gastroenterologist Noida | Gastroenterologist Near Me",
   description:
-    "Looking for the best gastrologist near me or a good gastroenterologist near you in Noida & Greater Noida? Dr. Sushrut Singh (MBBS, MD-KGMC, DM-ILBS) is a top-rated stomach doctor at Fortis Hospital Noida & Gaur City Clinic, Greater Noida. Expert in Fatty Liver, GERD, ERCP, Endoscopy & Bariatric procedures. 3000+ patients treated. 95% single-visit resolution. Call +91 93153 54431.",
+    "Looking for a gastroenterologist near me? Consult the best gastroenterologist in Noida for fatty liver, GERD, and stomach issues. Call now.",
   keywords:
     "best gastrologist near me, good gastroenterologist near me, gastroenterologist near me, stomach doctor in greater noida, stomach doctor near me, gastroenterologist best near me, gastroenterologist clinic near me, gastro clinic near me, best gastroenterologist in noida, liver specialist noida, gastrologist near me, dr sushrut singh, ERCP specialist noida, endoscopy cost noida, fatty liver treatment noida, stomach doctor noida, gastro doctor near me",
   robots: "index, follow",
@@ -13,15 +12,15 @@ export const metadata: Metadata = {
     canonical: "https://drsingh.com/",
   },
   openGraph: {
-    title: "Best Gastrologist Near Me – Dr. Sushrut Singh | Stomach Doctor & Gastroenterologist Noida",
+    title: "Best Gastroenterologist Noida | Gastroenterologist Near Me",
     description:
-      "Best gastrologist near me? Dr. Sushrut Singh is a top-rated gastroenterologist & stomach doctor at Fortis Hospital Noida & Gaur City Clinic, Greater Noida. 3000+ patients, 4.9/5 rated. Expert in Fatty Liver, ERCP, Endoscopy & Bariatric procedures.",
+      "Looking for a gastroenterologist near me? Consult the best gastroenterologist in Noida for fatty liver, GERD, and stomach issues. Call now.",
     type: "website",
     locale: "en_IN",
     url: "https://drsingh.com/",
     images: [
       {
-        url: "/images/portrait.webp",
+        url: "/images/drProfilepic.webp",
         width: 800,
         height: 800,
         alt: "Dr. Sushrut Singh – Best Gastrologist & Gastroenterologist Near Me in Noida",
@@ -58,7 +57,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Preload hero image for LCP */}
         <link
           rel="preload"
-          href="/images/portrait.webp"
+          href="/images/drProfilepic.webp"
           as="image"
           type="image/webp"
         />
@@ -70,7 +69,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               "@context": "https://schema.org",
               "@type": ["MedicalBusiness", "Physician"],
               name: "Dr. Sushrut Singh – Gastroenterologist & Liver Specialist",
-              image: "https://drsingh.com/images/portrait.webp",
+              image: "https://drsingh.com/images/drProfilepic.webp",
               url: "https://drsingh.com/",
               telephone: "+919315354431",
               priceRange: "₹₹",

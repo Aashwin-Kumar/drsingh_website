@@ -268,7 +268,7 @@ function LandingPage() {
               <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
                 <div className="absolute inset-0 bg-teal-200 rounded-[3rem] rotate-6"></div>
                 <img
-                  src="/images/portrait.webp"
+                  src="/images/drProfilepic.webp"
                   alt="Dr. Sushrut Singh – Best Gastroenterologist in Noida"
                   className="absolute inset-0 w-full h-full object-cover rounded-[3rem] shadow-2xl border-4 border-white"
                   width={320}
@@ -293,10 +293,8 @@ function LandingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-3 gap-4">
             {/* Call Card */}
-            <a
-              href={`tel:${PHONE_NUMBER}`}
-              id="call-btn-booking-card"
-              className="group flex flex-col items-center text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md hover:border-teal-200 transition-all hover:-translate-y-1"
+            <div
+              className="flex flex-col items-center text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm"
             >
               <span className="text-3xl mb-3">📞</span>
               <h3 className="font-bold text-slate-900 text-lg mb-1">Call to Book</h3>
@@ -305,15 +303,11 @@ function LandingPage() {
                 9 AM – 7 PM<br />
                 Mon – Sat
               </p>
-            </a>
+            </div>
 
             {/* WhatsApp Card */}
-            <a
-              href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hi, I'd like to book an appointment with Dr. Sushrut")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              id="wa-btn-booking-card"
-              className="group flex flex-col items-center text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md hover:border-green-200 transition-all hover:-translate-y-1"
+            <div
+              className="flex flex-col items-center text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm"
             >
               <span className="text-3xl mb-3">💬</span>
               <h3 className="font-bold text-slate-900 text-lg mb-1">WhatsApp</h3>
@@ -322,15 +316,11 @@ function LandingPage() {
                 We respond within<br />
                 2 hours
               </p>
-            </a>
+            </div>
 
             {/* Walk-in Card */}
-            <a
-              href="https://maps.app.goo.gl/FortisNoidaSector62"
-              target="_blank"
-              rel="noopener noreferrer"
-              id="walkin-booking-card"
-              className="group flex flex-col items-center text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-200 transition-all hover:-translate-y-1"
+            <div
+              className="flex flex-col items-center text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm"
             >
               <span className="text-3xl mb-3">📅</span>
               <h3 className="font-bold text-slate-900 text-lg mb-1">Walk-in</h3>
@@ -339,7 +329,7 @@ function LandingPage() {
                 Noida Sector 62<br />
                 OPD Timings
               </p>
-            </a>
+            </div>
           </div>
 
           <p className="text-center text-sm text-slate-400 mt-6">
