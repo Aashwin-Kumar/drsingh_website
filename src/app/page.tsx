@@ -173,7 +173,7 @@ function LandingPage() {
   const city = searchParams.get("city") || "Noida";
   const intent = searchParams.get("intent") || "Gastroenterologist";
   const [showModal, setShowModal] = useState(false);
-  const [clinicStatus, setClinicStatus] = useState({ isOpen: false, timeString: '', isReady: false });
+  const [clinicStatus, setClinicStatus] = useState({ isOpen: false, timeString: '', greeting: 'Hello', isReady: false });
 
   useEffect(() => {
     const updateTime = () => {
@@ -196,7 +196,12 @@ function LandingPage() {
         hour: '2-digit', minute: '2-digit', hour12: true
       };
       let dateString = now.toLocaleDateString('en-US', options).replace(/,/g, '');
-      setClinicStatus({ isOpen: open, timeString: dateString, isReady: true });
+      
+      let greeting = "Good Morning";
+      if (hours >= 12 && hours < 17) greeting = "Good Afternoon";
+      else if (hours >= 17) greeting = "Good Evening";
+
+      setClinicStatus({ isOpen: open, timeString: dateString, greeting, isReady: true });
     };
 
     updateTime();
@@ -309,7 +314,7 @@ function LandingPage() {
                             {clinicStatus.timeString} • {clinicStatus.isOpen ? 'OPEN' : 'CLOSED'}
                           </span>
                           <span className="text-[13px] font-semibold text-slate-800 leading-tight mt-0.5">
-                            {clinicStatus.isOpen ? 'Doctor is available.' : 'Book for next available slot.'}
+                            {clinicStatus.greeting}! {clinicStatus.isOpen ? 'Doctor is available soon.' : 'Book for next available slot.'}
                           </span>
                         </div>
                       </div>
