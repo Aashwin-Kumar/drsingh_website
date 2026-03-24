@@ -303,20 +303,24 @@ function LandingPage() {
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 to-teal-600"></div>
 
                   {clinicStatus.isReady && (
-                    <div className="flex items-center justify-between mb-5 bg-slate-50/80 rounded-2xl p-3 border border-slate-100">
-                      <div className="flex items-center gap-3">
-                        <div className={`relative flex items-center justify-center w-10 h-10 rounded-full shrink-0 ${clinicStatus.isOpen ? 'bg-green-100' : 'bg-amber-100'}`}>
-                          {clinicStatus.isOpen && <span className="animate-ping absolute w-full h-full rounded-full bg-green-400 opacity-20"></span>}
-                          <div className={`w-3 h-3 rounded-full shadow-sm ${clinicStatus.isOpen ? 'bg-green-500' : 'bg-amber-500'}`}></div>
+                    <div className="bg-slate-50/80 rounded-3xl p-4 border border-slate-100 flex items-center gap-4 mb-6 shadow-inner">
+                      <div className="relative shrink-0">
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${clinicStatus.isOpen ? 'bg-green-100' : 'bg-amber-100'}`}>
+                          {clinicStatus.isOpen ? (
+                            <Clock size={20} className="text-green-600 animate-pulse" />
+                          ) : (
+                            <Activity size={20} className="text-amber-600" />
+                          )}
                         </div>
-                        <div className="flex flex-col">
-                          <span className={`text-[10px] font-bold uppercase tracking-widest ${clinicStatus.isOpen ? 'text-green-600' : 'text-amber-600'}`}>
-                            {clinicStatus.timeString} • {clinicStatus.isOpen ? 'OPEN' : 'CLOSED'}
-                          </span>
-                          <span className="text-[13px] font-semibold text-slate-800 leading-tight mt-0.5">
-                            {clinicStatus.greeting}! {clinicStatus.isOpen ? 'Doctor is available soon.' : 'Book for next available slot.'}
-                          </span>
-                        </div>
+                        <div className={`absolute -right-1 -top-1 w-4 h-4 rounded-full border-2 border-white shadow-sm ${clinicStatus.isOpen ? 'bg-green-500' : 'bg-amber-500'}`}></div>
+                      </div>
+                      <div className="flex flex-col">
+                        <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-slate-400 mb-0.5">
+                          {clinicStatus.timeString} • {clinicStatus.isOpen ? 'Currently Open' : 'Opening Soon'}
+                        </p>
+                        <p className="text-[13.5px] font-bold text-slate-800 leading-tight">
+                          {clinicStatus.greeting}! {clinicStatus.isOpen ? 'Doctor is seeing patients now.' : 'Doctor will be available soon, meanwhile book your appointment fast.'}
+                        </p>
                       </div>
                     </div>
                   )}
