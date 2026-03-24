@@ -303,19 +303,19 @@ function LandingPage() {
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 to-teal-600"></div>
 
                   {clinicStatus.isReady && (
-                    <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100 flex items-center gap-3 mb-6 shadow-inner">
-                      <div className="relative shrink-0 flex items-center justify-center w-5 h-5">
-                        <div className={`w-3 h-3 rounded-full ${clinicStatus.isOpen ? 'bg-green-500 shadow-lg shadow-green-500/50' : 'bg-amber-500 shadow-lg shadow-amber-500/50'}`}></div>
-                        {clinicStatus.isOpen && <span className="animate-ping absolute w-full h-full rounded-full bg-green-400 opacity-30"></span>}
-                      </div>
-                      <div className="flex flex-col">
-                        <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-slate-400 mb-0.5">
+                    <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100 flex flex-col gap-1.5 mb-6 shadow-inner">
+                      <div className="flex items-center gap-2">
+                        <div className="relative flex items-center justify-center w-3 h-3">
+                          <div className={`w-1.5 h-1.5 rounded-full ${clinicStatus.isOpen ? 'bg-green-500' : 'bg-amber-500'}`}></div>
+                          {clinicStatus.isOpen && <span className="animate-ping absolute w-full h-full rounded-full bg-green-400 opacity-40"></span>}
+                        </div>
+                        <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-slate-400">
                           {clinicStatus.timeString} • {clinicStatus.isOpen ? 'Currently Open' : 'Opening Soon'}
                         </p>
-                        <p className="text-[13.5px] font-bold text-slate-800 leading-tight">
-                          {clinicStatus.greeting}! {clinicStatus.isOpen ? 'Doctor is seeing patients now.' : 'Doctor will be available soon, meanwhile book your appointment fast.'}
-                        </p>
                       </div>
+                      <p className="text-[13.5px] font-bold text-slate-800 leading-tight">
+                        {clinicStatus.greeting}! {clinicStatus.isOpen ? 'Doctor is seeing patients now.' : 'Doctor will be available soon, meanwhile book your appointment fast.'}
+                      </p>
                     </div>
                   )}
 
