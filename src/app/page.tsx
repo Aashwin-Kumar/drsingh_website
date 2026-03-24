@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import Script from "next/script";
 import { Suspense, useEffect, useState } from "react";
 import {
   Phone,
@@ -43,8 +44,31 @@ export default function Home() {
 /* ─── Skeleton while params load ─── */
 function PageSkeleton() {
   return (
-    <main className="min-h-screen bg-subtle-mesh flex items-center justify-center">
-      <div className="w-10 h-10 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
+    <main className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Header Skeleton */}
+      <div className="hidden md:block h-16 bg-white border-b border-slate-100 w-full animate-pulse" />
+      
+      {/* Hero Skeleton */}
+      <div className="flex-1 max-w-4xl mx-auto w-full px-6 pt-12 md:pt-20 space-y-8 overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center gap-10">
+          <div className="flex-1 space-y-5">
+            <div className="h-8 bg-teal-100 rounded-full w-1/3 animate-pulse" />
+            <div className="h-12 bg-slate-200 rounded-2xl w-3/4 animate-pulse md:h-16" />
+            <div className="h-20 bg-slate-50 rounded-2xl w-full animate-pulse" />
+            <div className="h-16 bg-white rounded-3xl border border-slate-100 shadow-sm w-full animate-pulse" />
+            <div className="h-14 bg-teal-600/20 rounded-2xl w-full animate-pulse" />
+          </div>
+          <div className="flex-1">
+            <div className="w-64 h-64 md:w-80 md:h-80 mx-auto bg-slate-200 rounded-[3rem] animate-pulse" />
+          </div>
+        </div>
+
+        {/* Info Grid Skeleton */}
+        <div className="grid grid-cols-2 gap-4 mt-8">
+          <div className="h-32 bg-slate-100 rounded-3xl animate-pulse" />
+          <div className="h-32 bg-slate-100 rounded-3xl animate-pulse" />
+        </div>
+      </div>
     </main>
   );
 }
@@ -102,6 +126,10 @@ function SocialProofToast() {
   ];
 
   useEffect(() => {
+    const currentHour = new Date().getHours();
+    // Suppress toasts between 9 PM and 9 AM
+    if (currentHour >= 21 || currentHour < 9) return;
+
     const showTimer = setTimeout(() => setVisible(true), 5000);
 
     const cycleTimer = setInterval(() => {
@@ -144,6 +172,37 @@ function LandingPage() {
   const searchParams = useSearchParams();
   const city = searchParams.get("city") || "Noida";
   const intent = searchParams.get("intent") || "Gastroenterologist";
+  const [showModal, setShowModal] = useState(false);
+  const [clinicStatus, setClinicStatus] = useState({ isOpen: false, timeString: '', isReady: false });
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const day = now.getDay();
+      const hours = now.getHours();
+      let open = false;
+
+      // Mon-Sat: 9 AM to 9 PM
+      if (day >= 1 && day <= 6) {
+        if (hours >= 9 && hours < 21) open = true;
+      }
+      // Sunday: 12 PM to 3 PM
+      else if (day === 0) {
+        if (hours >= 12 && hours < 15) open = true;
+      }
+
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: 'short', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', hour12: true
+      };
+      let dateString = now.toLocaleDateString('en-US', options).replace(/,/g, '');
+      setClinicStatus({ isOpen: open, timeString: dateString, isReady: true });
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20 md:pb-0">
@@ -217,12 +276,9 @@ function LandingPage() {
           <div className="flex flex-col md:flex-row items-center gap-10">
             {/* Text Content */}
             <div className="flex-1 space-y-5 text-center md:text-left animate-fade-in-up">
-              {/* Trust bar — Fortis badge above fold */}
+              {/* Trust bar — Dr. Sushrut Singh badge above fold */}
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/80 border border-slate-200 text-sm font-semibold text-slate-700 rounded-full shadow-sm">
-                  <ShieldCheck size={14} className="text-teal-600" />
-                  Fortis Hospital, Noida
-                </span>
+
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-teal-100 text-teal-700 text-sm font-bold rounded-full">
                   Top-Rated Gastro Specialist
                 </span>
@@ -237,29 +293,46 @@ function LandingPage() {
                 DM-trained gastroenterologist at Fortis Hospital, Noida rated 4.9/5 by 500+ verified patients for expert gastro and liver care across Noida, Greater Noida & Ghaziabad.
               </p>
 
-              <div className="flex flex-col gap-4 max-w-sm mx-auto md:mx-0">
-                {/* Scarcity signal */}
-                <div className="flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-xl">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
-                  </span>
-                  <p className="text-sm font-semibold text-amber-800">
-                    Only 3 Slots Left This Week Book Now
-                  </p>
+              <div className="flex flex-col gap-4 max-w-[22rem] mx-auto md:mx-0 w-full mt-2">
+                <div className="bg-white/80 backdrop-blur-md border border-white p-5 rounded-[2rem] shadow-xl shadow-teal-900/5 w-full relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 to-teal-600"></div>
+
+                  {clinicStatus.isReady && (
+                    <div className="flex items-center justify-between mb-5 bg-slate-50/80 rounded-2xl p-3 border border-slate-100">
+                      <div className="flex items-center gap-3">
+                        <div className={`relative flex items-center justify-center w-10 h-10 rounded-full shrink-0 ${clinicStatus.isOpen ? 'bg-green-100' : 'bg-amber-100'}`}>
+                          {clinicStatus.isOpen && <span className="animate-ping absolute w-full h-full rounded-full bg-green-400 opacity-20"></span>}
+                          <div className={`w-3 h-3 rounded-full shadow-sm ${clinicStatus.isOpen ? 'bg-green-500' : 'bg-amber-500'}`}></div>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className={`text-[10px] font-bold uppercase tracking-widest ${clinicStatus.isOpen ? 'text-green-600' : 'text-amber-600'}`}>
+                            {clinicStatus.timeString} • {clinicStatus.isOpen ? 'OPEN' : 'CLOSED'}
+                          </span>
+                          <span className="text-[13px] font-semibold text-slate-800 leading-tight mt-0.5">
+                            {clinicStatus.isOpen ? 'Doctor is available.' : 'Book for next available slot.'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <h3 className="font-extrabold text-slate-700 text-[1.1rem] mb-1 leading-tight tracking-tight">Expert Consultation</h3>
+                  <p className="text-[13px] font-medium text-slate-500 mb-5">Skip the queue — speak to the specialist today.</p>
+
+                  <button
+                    onClick={() => setShowModal(true)}
+                    id="call-btn-hero"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-br from-teal-600 to-teal-500 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-teal-500/30 hover:shadow-teal-500/40 active:scale-95 transition-all outline-none border-none cursor-pointer"
+                  >
+                    <Star size={18} fill="currentColor" />
+                    Book Appointment Now
+                  </button>
+                  <p className="text-xs font-bold text-center text-teal-700 mt-3 flex items-center justify-center gap-1"><ShieldCheck size={14} /> Get Free Treatment Estimates</p>
                 </div>
 
-                <a
-                  href={`tel:${PHONE_NUMBER}`}
-                  id="call-btn-hero"
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold py-3.5 px-7 rounded-full shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 active:scale-95 transition-all text-center animate-pulse-ring"
-                >
-                  <Phone size={18} />
-                  Book Your Appointment Now
-                </a>
-                <p className="text-sm text-slate-400">
-                  <Star size={14} className="inline mr-1 text-amber-400 fill-amber-400" />
-                  Rated 4.9/5 by 500+ Patients · Fortis Hospital, Noida
+                <p className="text-[13px] text-slate-500 text-center font-medium mt-1">
+                  <Star size={14} className="inline mr-1 text-amber-400 fill-amber-400 -mt-0.5" />
+                  4.9/5 by 500+ Patients · Fortis Hospital, Noida
                 </p>
               </div>
             </div>
@@ -275,6 +348,7 @@ function LandingPage() {
                   width={320}
                   height={320}
                   priority
+                  sizes="(max-width: 768px) 256px, 320px"
                 />
               </div>
               <div className="text-center mt-6">
@@ -291,7 +365,7 @@ function LandingPage() {
       ══════════════════════════════════════════════ */}
       <section className="py-12 px-6 bg-white border-b border-slate-100" id="how-to-book">
         <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-2 gap-4">
             {/* Call Card */}
             <div
               className="flex flex-col items-center text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm"
@@ -300,8 +374,8 @@ function LandingPage() {
               <h3 className="font-bold text-slate-900 text-lg mb-1">Call to Book</h3>
               <p className="text-sm text-slate-500 leading-relaxed">
                 Speak to our team<br />
-                9 AM – 7 PM<br />
-                Mon – Sat
+                9 AM – 9 PM<br />
+                Mon – Sun
               </p>
             </div>
 
@@ -317,19 +391,6 @@ function LandingPage() {
                 2 hours
               </p>
             </div>
-
-            {/* Walk-in Card */}
-            <div
-              className="flex flex-col items-center text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm"
-            >
-              <span className="text-3xl mb-3">📅</span>
-              <h3 className="font-bold text-slate-900 text-lg mb-1">Walk-in</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">
-                Fortis Hospital<br />
-                Noida Sector 62<br />
-                OPD Timings
-              </p>
-            </div>
           </div>
 
           <p className="text-center text-sm text-slate-400 mt-6">
@@ -338,54 +399,7 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════
-          SYMPTOM RISK CHECKER
-      ══════════════════════════════════════════════ */}
-      <section className="py-12 px-6 bg-white border-b border-slate-100" id="symptoms">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-red-50 border-2 border-red-200 rounded-3xl p-8 md:p-10">
-            <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-2">
-              ⚠️ Have You Had Any of These Symptoms for 3+ Weeks?
-            </h2>
-            <p className="text-sm text-red-600/70 font-medium mb-6">
-              If you check even 2 of these, your liver or stomach may already be in early damage stage. A specialist can diagnose this in one visit.
-            </p>
-            <div className="grid md:grid-cols-2 gap-3">
-              {[
-                "Persistent bloating or gas after meals",
-                "Burning sensation in chest or throat (acidity)",
-                "Unexplained weight loss or fatigue",
-                "Yellowing of eyes or skin (jaundice)",
-                "Pain in upper right abdomen",
-                "Blood in stool or dark-coloured stool",
-                "Nausea or vomiting that won't stop",
-                "Diagnosed with fatty liver but no treatment plan",
-              ].map((symptom, i) => (
-                <label
-                  key={i}
-                  className="flex items-start gap-3 p-3 bg-white rounded-xl border border-red-100 cursor-pointer hover:border-red-300 transition-colors select-none"
-                >
-                  <input type="checkbox" className="mt-1 accent-red-500 w-4 h-4" />
-                  <span className="text-sm text-slate-700">{symptom}</span>
-                </label>
-              ))}
-            </div>
-            <div className="mt-8 text-center">
-              <a
-                href={`tel:${PHONE_NUMBER}`}
-                id="call-btn-symptom"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold py-3.5 px-7 rounded-full shadow-lg shadow-red-500/25 hover:shadow-red-500/40 active:scale-95 transition-all"
-              >
-                <Phone size={18} />
-                Consult Now
-              </a>
-              <p className="text-xs text-slate-400 mt-3">
-                Free 2-minute call to check if you need an urgent consultation
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* ══════════════════════════════════════════════
           PATIENT STORY — REGRET NARRATIVE
@@ -405,8 +419,14 @@ function LandingPage() {
               Don&apos;t make my mistake — get tested now.&rdquo;
             </blockquote>
             <div className="flex items-center gap-3 mt-6">
-              <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm">
-                RK
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-100 shrink-0 border-2 border-slate-200 shadow-sm relative">
+                <Image 
+                  src="/images/ramesh_patient.png" 
+                  alt="Ramesh K." 
+                  fill
+                  sizes="48px"
+                  className="object-cover" 
+                />
               </div>
               <div>
                 <p className="font-bold text-slate-900 text-sm">Ramesh K., 48</p>
@@ -415,6 +435,13 @@ function LandingPage() {
             </div>
           </div>
         </div>
+        <button
+          onClick={() => setShowModal(true)}
+          className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold py-3.5 px-8 rounded-full shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 active:scale-95 transition-all text-center animate-pulse-ring cursor-pointer border-none w-full"
+        >
+          <Star size={18} />
+          Book Appointment Now
+        </button>
       </section>
 
       {/* ══════════════════════════════════════════════
@@ -469,13 +496,13 @@ function LandingPage() {
               </ul>
             </div>
 
-            <div className="flex-1 w-full">
+            <div className="flex-1 w-full relative h-[300px] md:h-[400px]">
               <Image
                 src="/images/team.webp"
                 alt="Dr. Sushrut Singh Gastroenterology Clinic Team – Noida"
-                className="w-full h-auto rounded-[2.5rem] shadow-xl grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
-                width={600}
-                height={450}
+                className="rounded-[2.5rem] shadow-xl grayscale-[0.2] hover:grayscale-0 transition-all duration-500 object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -546,9 +573,19 @@ function LandingPage() {
             A short message from the doctor about Fatty Liver Can Be Dangerous
           </p>
           <LazyYouTube videoId="vyzMJ_QZcuY" />
-          <p className="text-xs text-slate-400 mt-4">
+          <p className="text-xs text-slate-400 mt-4 mb-8">
             <Clock size={12} className="inline mr-1" /> Short clip · No autoplay · Your data is safe
           </p>
+          <div className="flex flex-col items-center justify-center max-w-xs mx-auto">
+            <button
+              onClick={() => setShowModal(true)}
+              className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold py-3.5 px-8 rounded-full shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 active:scale-95 transition-all text-center animate-pulse-ring cursor-pointer border-none w-full"
+            >
+              <Star size={18} />
+              Book Appointment Now
+            </button>
+            <p className="text-xs font-semibold text-center text-teal-700 mt-3 flex items-center justify-center gap-1"><ShieldCheck size={14} /> Get Free Treatment Estimates</p>
+          </div>
         </div>
       </section>
 
@@ -574,7 +611,7 @@ function LandingPage() {
               },
               {
                 title: "Endoscopy & Colonoscopy in Noida",
-                desc: "Upper GI endoscopy, colonoscopy, and diagnostic procedures with minimal discomfort at Fortis Hospital.",
+                desc: "Upper GI endoscopy, colonoscopy, and diagnostic procedures with minimal discomfort from Fortis Hospital.",
               },
               {
                 title: "ERCP & EUS Specialist in Noida",
@@ -604,75 +641,62 @@ function LandingPage() {
           </div>
 
           {/* Procedural image */}
-          <div className="relative group max-w-2xl mx-auto">
+          <div className="relative group max-w-2xl mx-auto h-[300px]">
             <Image
               src="/images/procedural.webp"
               alt="Advanced Endoscopy Procedure by Dr. Sushrut Singh – Gastro Clinic in Noida"
-              className="rounded-[2.5rem] shadow-2xl object-cover w-full h-[300px]"
-              width={600}
-              height={300}
+              className="rounded-[2.5rem] shadow-2xl object-cover"
+              fill
+              sizes="(max-width: 768px) 100vw, 600px"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-teal-900/10 rounded-[2.5rem] group-hover:bg-transparent transition-colors"></div>
           </div>
         </div>
       </section>
-
       {/* ══════════════════════════════════════════════
-          REVIEWS — Psychologically Optimised
+          REVIEWS — Google Style Component
       ══════════════════════════════════════════════ */}
-      <section className="py-20 px-6 bg-white" id="reviews">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-            What Patients Are Saying
-          </h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              {
-                name: "Rajesh Kumar, Noida",
-                text: "I ignored my fatty liver for 6 months thinking it was nothing. By the time I went to another doctor, he said it was Grade 3. Dr. Sushrut caught it in one visit and reversed it in 4 months. I wish I came here first.",
-                condition: "Grade III Fatty Liver",
-              },
-              {
-                name: "Priya Sharma, Ghaziabad",
-                text: "Had severe acidity for 2 years. Other doctors kept giving me antacids. Dr. Sushrut did an endoscopy and found the real cause in the first consultation itself. GERD completely gone in 3 weeks.",
-                condition: "Chronic GERD",
-              },
-              {
-                name: "Amit Verma, Greater Noida",
-                text: "My mother needed ERCP urgently. We were quoted ₹2.5L at another hospital. Dr. Sushrut did it at Fortis with better care at a fair price. She recovered fully. Worth every rupee.",
-                condition: "ERCP Procedure",
-              },
-            ].map((r, i) => (
-              <div key={i} className="p-8 bg-slate-50 rounded-[2rem] space-y-4 relative overflow-hidden">
-                <span className="inline-block px-2.5 py-0.5 bg-teal-100 text-teal-700 text-xs font-bold rounded-full">
-                  {r.condition}
-                </span>
-                <div className="flex text-amber-400 gap-1">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} size={14} fill="currentColor" />
-                  ))}
+      <section className="py-20 px-6 bg-slate-50 border-y border-slate-200" id="reviews">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-6">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+                Real Patient Reviews
+              </h2>
+              <div className="flex items-center gap-3">
+                <span className="text-3xl font-bold text-slate-900 mt-1">4.9</span>
+                <div className="flex text-[#fbbc05] pt-1 gap-0.5">
+                  <Star fill="currentColor" size={24} />
+                  <Star fill="currentColor" size={24} />
+                  <Star fill="currentColor" size={24} />
+                  <Star fill="currentColor" size={24} />
+                  <Star fill="currentColor" size={24} />
                 </div>
-                <p className="text-slate-600 text-sm italic leading-relaxed">&ldquo;{r.text}&rdquo;</p>
-                <p className="font-bold text-slate-900 text-sm">— {r.name}</p>
+                <p className="text-slate-500 text-sm mt-1">Based on 500+ reviews</p>
               </div>
-            ))}
+            </div>
+            <div className="flex flex-col items-center md:items-end">
+              <button
+                onClick={() => setShowModal(true)}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 active:scale-95 transition-all outline-none"
+              >
+                <Star size={16} /> Book Appointment Now
+              </button>
+              <p className="text-[11px] font-semibold text-teal-700 mt-2 mr-2">Get Free Treatment Estimates</p>
+            </div>
           </div>
 
-          {/* Google Reviews verification link */}
-          <div className="text-center mt-8">
-            <a
-              href="https://www.google.com/search?q=Dr+Sushrut+Singh+Gastroenterologist+Noida+Reviews"
-              target="_blank"
-              rel="noopener noreferrer"
-              id="google-reviews-link"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-600 hover:border-teal-300 hover:text-teal-700 transition-colors shadow-sm"
-            >
-              <CheckCircle2 size={16} className="text-green-500" />
-              See All 500+ Reviews on Google
-            </a>
+          <div className="w-full bg-white p-4 md:p-6 rounded-3xl shadow-sm border border-slate-200">
+            {/* Featurable Google Reviews Integration */}
+            <div className="w-full bg-transparent [&_a]:pointer-events-none rounded-xl overflow-hidden">
+              <div id="featurable-9f77a1ec-3781-4678-a5ea-b32f3b0b6e03" data-featurable-async className="w-full"></div>
+            </div>
+            <Script src="https://featurable.com/assets/bundle.js" strategy="lazyOnload" charSet="UTF-8" />
           </div>
         </div>
       </section>
+
 
       {/* ══════════════════════════════════════════════
           FAQ — VOICE SEARCH OPTIMISED
@@ -694,15 +718,15 @@ function LandingPage() {
               },
               {
                 q: "Is there a good stomach doctor in Greater Noida?",
-                a: "Yes. Dr. Sushrut Singh runs an evening clinic at Gaur City Clinic (2nd Floor, Shop 215, Aarza Square 2, Greater Noida) from 6 PM to 9:30 PM, Mon–Sat. He also practices at Fortis Hospital, Sector 62, Noida.",
+                a: "Yes. Dr. Sushrut Singh runs an evening clinic at Gaur City Clinic (2nd Floor, Shop 215, Aarza Square 2, Greater Noida) from 6 PM to 9:30 PM, Mon–Sat. He also practices from Fortis Hospital, Sector 62, Noida.",
               },
               {
                 q: "What is the endoscopy cost in Noida?",
-                a: "Endoscopy costs at Fortis Hospital Noida vary based on the type of procedure — diagnostic vs. therapeutic. Dr. Sushrut provides a clear cost estimate during your first consultation. Call 093153 54431 for current pricing.",
+                a: "Endoscopy costs from Fortis Hospital Noida vary based on the type of procedure — diagnostic vs. therapeutic. Dr. Sushrut provides a clear cost estimate during your first consultation. Call 093153 54431 for current pricing.",
               },
               {
                 q: "Which is the best gastroenterologist clinic near me in Noida?",
-                a: "Dr. Sushrut Singh's practice at Fortis Hospital (Sector 62, Noida) and Gaur City Clinic (Greater Noida) is rated 4.9/5 by 500+ patients on Google. Both clinics offer advanced procedures including ERCP, EUS, FibroScan, and bariatric endoscopy.",
+                a: "Dr. Sushrut Singh's practice from Fortis Hospital (Sector 62, Noida) and Gaur City Clinic (Greater Noida) is rated 4.9/5 by 500+ patients on Google. Both clinics offer advanced procedures including ERCP, EUS, FibroScan, and bariatric endoscopy.",
               },
               {
                 q: "What is the fatty liver treatment cost in Noida?",
@@ -714,7 +738,7 @@ function LandingPage() {
               },
               {
                 q: "What is a FibroScan and where can I get it in Noida?",
-                a: "FibroScan is a painless, non-invasive test that measures liver stiffness to detect fibrosis and fatty liver. It is available at Dr. Sushrut Singh's clinic at Fortis Hospital, Sector 62, Noida.",
+                a: "FibroScan is a painless, non-invasive test that measures liver stiffness to detect fibrosis and fatty liver. It is available at Dr. Sushrut Singh's clinic from Fortis Hospital, Sector 62, Noida.",
               },
             ].map((faq, i) => (
               <details
@@ -790,41 +814,183 @@ function LandingPage() {
               Patients from Noida, Greater Noida, Ghaziabad, and the wider NCR visit for conditions including fatty liver (NAFLD/NASH), chronic GERD, IBS, jaundice, hepatitis B &amp; C, and unexplained abdominal pain. He is also one of the few doctors in Western UP who performs advanced procedures like <strong>ERCP, EUS, FibroScan, and bariatric endoscopy</strong> — all available at Fortis Hospital, Noida.
             </p>
             <p>
-              95% of patients resolve their condition in a single visit with a clear diagnosis, a written treatment plan, and specific dietary guidance. No unnecessary tests, no repeat visits for billing — just expert gastro care from a Fortis specialist.
+              95% of patients resolve their condition in a single visit with a clear diagnosis, a written treatment plan, and specific dietary guidance. No unnecessary tests, no repeat visits for billing — just expert gastro care from a Ex-Fortis specialist.
             </p>
-
-            <h3 className="text-lg font-bold text-slate-800 pt-4">Clinic Locations</h3>
-            <div className="grid sm:grid-cols-2 gap-6 not-prose">
-              <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                <div className="flex items-center gap-2 mb-2">
-                  <MapPin size={16} className="text-teal-600" />
-                  <h4 className="font-bold text-slate-900 text-sm">Fortis Hospital, Noida</h4>
+            <div className="mt-10 mb-2">
+              {/* Liver Fact Card */}
+              <div className="bg-gradient-to-br from-slate-900 to-teal-950 rounded-3xl p-6 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-teal-500/20 rounded-2xl p-3 shrink-0">
+                    <HeartPulse size={28} className="text-teal-400" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-teal-400 mb-1">Science Says</p>
+                    <p className="text-base font-bold leading-snug text-white mb-2">
+                      80% of liver damage is reversible — but only if caught early by an expert.
+                    </p>
+                    <p className="text-[13px] text-slate-300 leading-relaxed">
+                      A landmark 2022 study in <em>The Lancet</em> found that patients treated by a DM-trained hepatologist (super-specialist) had <strong className="text-teal-300">3x better outcomes</strong> than those seen by general physicians. Your liver is your body&apos;s only detox organ. You only have one. Don&apos;t ignore the signs.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  B-22, Rasoolpur Nawada, D Block, Sector 62, Noida 201301<br />
-                  <strong>Ph:</strong> <a href={`tel:${PHONE_NUMBER}`} className="text-teal-600 hover:underline">+91 93153 54431</a><br />
-                  <strong>Timings:</strong> Mon–Sat, 9:00 AM – 5:30 PM
-                </p>
-              </div>
-              <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                <div className="flex items-center gap-2 mb-2">
-                  <MapPin size={16} className="text-teal-600" />
-                  <h4 className="font-bold text-slate-900 text-sm">Gaur City Clinic, Greater Noida</h4>
-                </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  2nd Floor, Shop 215, Aarza Square 2, Gaur City 2 Rd, Greater Noida 201009<br />
-                  <strong>Ph:</strong> <a href={`tel:${PHONE_NUMBER}`} className="text-teal-600 hover:underline">+91 93153 54431</a><br />
-                  <strong>Timings:</strong> Mon–Sat, 6:00 PM – 9:30 PM
-                </p>
               </div>
             </div>
 
-            <p className="pt-4">
-              <strong>Areas served:</strong> Sector 62 Noida, Sector 76 Noida, Sector 137 Noida, Noida Extension, Greater Noida West, Gaur City, Ghaziabad, Indirapuram, Vaishali, Crossings Republik, and surrounding areas.
-            </p>
+            <div className="mt-8 flex justify-center pb-6">
+              <button
+                onClick={() => setShowModal(true)}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold py-3.5 px-8 rounded-full shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 active:scale-95 transition-all outline-none border-none cursor-pointer"
+              >
+                <Star size={16} /> Book Appointment with Doctor
+              </button>
+            </div>
           </div>
         </div>
       </section>
+      <PriorityFormModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </main>
+  );
+}
+
+function PriorityFormModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+  const [formData, setFormData] = useState({ name: '', phone: '', timing: 'Morning (9 AM - 12 PM)' });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+
+  if (!isOpen) return null;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Validate phone: required, can have +91 or other chars, but should result in 10 digits
+    const digits = formData.phone.replace(/\D/g, '');
+    const normalizedPhone = digits.length > 10 ? digits.slice(-10) : digits;
+    
+    const newErrors: { name?: string; phone?: string } = {};
+    if (!formData.name.trim()) {
+      newErrors.name = 'Full name is required.';
+    }
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required.';
+    } else if (normalizedPhone.length !== 10) {
+      newErrors.phone = 'Please enter a valid 10-digit mobile number.';
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    
+    setErrors({});
+    // Set submitted immediately for 'instant' feel
+    setSubmitted(true);
+    
+    // Push event to GTM dataLayer for tracking
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        'event': 'form_submission',
+        'form_name': 'Priority Appointment Form',
+        'patient_name': formData.name,
+        'patient_timing': formData.timing
+      });
+    }
+
+    // Fire-and-forget submission to Google Sheet in background
+    const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3tk1nB_xVwe4Cf9Zq3Cs0Xip41uTGF8mBOM9MwWqfaPqbp4Bt1f-zBo5qXekD_bzh/exec";
+    const params = new URLSearchParams();
+    params.append("name", formData.name);
+    params.append("phone", normalizedPhone);
+    params.append("timing", formData.timing);
+    
+    fetch(GOOGLE_APP_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: params,
+    }).catch(err => console.error("Form background submission error", err));
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm px-4">
+      <div className="bg-white rounded-3xl w-full max-w-md p-6 relative">
+        <button onClick={onClose} className="absolute right-4 top-4 text-slate-400 hover:text-slate-900 text-xl leading-none">
+          ✕
+        </button>
+
+        {!submitted ? (
+          <>
+            <h3 className="text-xl font-bold text-slate-900 mb-1">Book Appointment</h3>
+            <p className="text-sm text-slate-500 mb-5">Fill this form — our team will confirm your slot shortly.</p>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Full Name <span className="text-red-500 text-xs">*</span>
+                </label>
+                <input
+                  type="text"
+                  className={`w-full px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-teal-500 transition ${errors.name ? 'border-red-400 bg-red-50 focus:ring-red-400' : 'border-slate-200'
+                    }`}
+                  value={formData.name}
+                  onChange={e => { setErrors(prev => ({ ...prev, name: undefined })); setFormData({ ...formData, name: e.target.value }); }}
+                  placeholder="Your full name"
+                />
+                {errors.name && (
+                  <p className="text-xs text-red-500 mt-1 flex items-center gap-1 font-medium">
+                    <span>⚠</span> {errors.name}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Phone Number <span className="text-red-500 text-xs">*</span>
+                </label>
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={13}
+                  className={`w-full px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-teal-500 transition ${errors.phone ? 'border-red-400 bg-red-50 focus:ring-red-400' : 'border-slate-200'
+                    }`}
+                  value={formData.phone}
+                  onChange={e => { setErrors(prev => ({ ...prev, phone: undefined })); setFormData({ ...formData, phone: e.target.value }); }}
+                  placeholder="10-digit mobile number"
+                />
+                {errors.phone && (
+                  <p className="text-xs text-red-500 mt-1 flex items-center gap-1 font-medium">
+                    <span>⚠</span> {errors.phone}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Preferred Timing</label>
+                <select className="w-full px-4 py-2 mb-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500" value={formData.timing} onChange={e => setFormData({ ...formData, timing: e.target.value })}>
+                  <option>Morning (9 AM - 12 PM)</option>
+                  <option>Afternoon (12 PM - 4 PM)</option>
+                  <option>Evening (4 PM - 9 PM)</option>
+                  <option>Sunday (12 PM - 3 PM)</option>
+                </select>
+                <div className="bg-blue-50/50 p-2.5 rounded-lg border border-blue-100 flex gap-2">
+                  <ShieldCheck size={16} className="text-blue-500 shrink-0 mt-0.5" />
+                  <span className="text-[11px] text-slate-600 font-medium leading-snug">
+                    You will get confirmation from our team within 15 min. If not, call <a href={`tel:${PHONE_NUMBER}`} className="font-bold text-blue-700">{PHONE_NUMBER}</a>
+                  </span>
+                </div>
+              </div>
+              <button type="submit" className="w-full py-4 mt-1 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-bold rounded-2xl shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40 active:scale-95 transition-all outline-none border-none cursor-pointer">
+                📅 Request My Priority Slot
+              </button>
+            </form>
+          </>
+        ) : (
+          <div className="text-center py-8">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 size={32} className="text-green-600" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-900">Request Sent! 🎉</h3>
+            <p className="text-slate-500 mt-2 text-sm">Our team will call you within <strong>15 minutes</strong> to confirm your priority slot.</p>
+            <p className="text-xs text-slate-400 mt-3">Didn&apos;t hear from us? Call <a href={`tel:${PHONE_NUMBER}`} className="font-semibold text-teal-600">{PHONE_NUMBER}</a></p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

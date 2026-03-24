@@ -74,12 +74,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
         
-        {/* Preload hero image for LCP - Next.js handles this better with Image component but keeping for safety */}
+        {/* Performance: Preconnect to external domains */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://script.google.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        
+        {/* Preload hero image for LCP */}
         <link
           rel="preload"
           href="/images/drProfilepic.webp"
           as="image"
           type="image/webp"
+          fetchPriority="high"
         />
 
         {/* Local Business + Physician JSON-LD Schema */}
@@ -96,7 +104,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               telephone: "+919315354431",
               priceRange: "₹₹",
               description:
-                "Best gastrologist near you & top stomach doctor in Noida & Greater Noida. Dr. Sushrut Singh is a DM-trained gastroenterologist specialising in Fatty Liver, GERD, IBS, ERCP, EUS, Endoscopy & Bariatric procedures at Fortis Hospital Noida & Gaur City Clinic.",
+                "Best gastrologist near you & top stomach doctor in Noida & Greater Noida. Dr. Sushrut Singh is a DM-trained gastroenterologist specialising in Fatty Liver, GERD, IBS, ERCP, EUS, Endoscopy & Bariatric procedures at Dr. Sushrut Singh Clinic & Gaur City Clinic.",
               medicalSpecialty: "Gastroenterology",
               address: [
                 {
@@ -159,7 +167,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   name: "Who is the best liver doctor in Noida?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Dr. Sushrut Singh is a DM-trained gastroenterologist and liver specialist at Fortis Hospital, Noida. With 12+ years of experience and training under Dr. Shiv Sarin at ILBS Delhi, he has treated 3,000+ patients for fatty liver, cirrhosis, hepatitis, and other liver conditions.",
+                    text: "Dr. Sushrut Singh is a DM-trained gastroenterologist and liver specialist at Dr. Sushrut Singh Hospital (Ex-Dr. Sushrut Singh), Noida. With 12+ years of experience and training under Dr. Shiv Sarin at ILBS Delhi, he has treated 3,000+ patients for fatty liver, cirrhosis, hepatitis, and other liver conditions.",
                   },
                 },
                 {
@@ -167,7 +175,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   name: "What is the endoscopy cost in Noida?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Endoscopy costs at Fortis Hospital Noida vary based on the type of procedure — diagnostic vs. therapeutic. Dr. Sushrut provides a clear cost estimate during your first consultation. Call 093153 54431 for current pricing.",
+                    text: "Endoscopy costs at Dr. Sushrut Singh Clinic vary based on the type of procedure — diagnostic vs. therapeutic. Dr. Sushrut provides a clear cost estimate during your first consultation. Call 093153 54431 for current pricing.",
                   },
                 },
                 {
@@ -175,7 +183,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   name: "Which is the best gastroenterologist clinic near me in Noida?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Dr. Sushrut Singh's gastroenterology practice at Fortis Hospital (Sector 62, Noida) and Gaur City Clinic (Greater Noida) is rated 4.9/5 by 500+ patients on Google. Both clinics offer advanced procedures including ERCP, EUS, FibroScan, and bariatric endoscopy.",
+                    text: "Dr. Sushrut Singh's gastroenterology practice at Dr. Sushrut Singh Hospital (Ex-Dr. Sushrut Singh) (Sector 62, Noida) and Gaur City Clinic (Greater Noida) is rated 4.9/5 by 500+ patients on Google. Both clinics offer advanced procedures including ERCP, EUS, FibroScan, and bariatric endoscopy.",
                   },
                 },
                 {
@@ -191,7 +199,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   name: "Is ERCP available in Noida?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Yes. Dr. Sushrut Singh is one of the few DM-trained ERCP and EUS specialists in Western Uttar Pradesh, performing these advanced procedures at Fortis Hospital, Noida. He has handled 500+ complex ERCP cases.",
+                    text: "Yes. Dr. Sushrut Singh is one of the few DM-trained ERCP and EUS specialists in Western Uttar Pradesh, performing these advanced procedures at Dr. Sushrut Singh Hospital (Ex-Dr. Sushrut Singh), Noida. He has handled 500+ complex ERCP cases.",
                   },
                 },
                 {
@@ -199,7 +207,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   name: "What is a FibroScan and where can I get it in Noida?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "FibroScan is a painless, non-invasive test that measures liver stiffness to detect fibrosis and fatty liver. It is available at Dr. Sushrut Singh's clinic at Fortis Hospital, Sector 62, Noida.",
+                    text: "FibroScan is a painless, non-invasive test that measures liver stiffness to detect fibrosis and fatty liver. It is available at Dr. Sushrut Singh's clinic at Dr. Sushrut Singh Hospital (Ex-Dr. Sushrut Singh), Sector 62, Noida.",
                   },
                 },
               ],
@@ -227,7 +235,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <div className="grid gap-6 sm:grid-cols-2 mb-8">
               <div>
                 <h3 className="text-teal-400 font-semibold text-sm tracking-wide uppercase mb-2">
-                  Fortis Hospital Noida
+                  Dr. Sushrut Singh Clinic
                 </h3>
                 <p className="text-slate-400 text-sm leading-relaxed">
                   B-22, Rasoolpur Nawada, D Block, Sector 62, Noida <br />
