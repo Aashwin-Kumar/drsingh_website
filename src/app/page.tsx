@@ -474,17 +474,18 @@ function LandingPage() {
                   Why Patients Trust Dr. Sushrut Singh
                 </h2>
                 <p className="text-slate-500 text-sm leading-relaxed mt-3">
-                  As a DM-trained gastroenterologist at Fortis Hospital, Noida, Dr. Sushrut is among the few super-specialists in NCR offering advanced procedures like ERCP, EUS, and FibroScan under one roof — trusted by 3,000+ patients across Noida, Greater Noida & Ghaziabad.
+                  A highly experienced Gastroenterologist & Liver Specialist trained at ILBS, New Delhi — one of the top liver institutes in India. With 12+ years of clinical practice, research, and academic publications in gastroenterology, Dr. Sushrut offers accurate diagnosis, minimal medication, and a patient-friendly treatment approach at Fortis Hospital, Noida & Gaur City Clinic, Greater Noida.
                 </p>
                 <div className="h-1.5 w-20 bg-teal-500 rounded-full"></div>
               </div>
 
-              <ul className="space-y-6">
+              <ul className="space-y-5">
                 {[
-                  { icon: <GraduationCap />, title: "DM from ILBS, Delhi", text: "Trained at India's premier liver institute – Institute of Liver & Biliary Sciences." },
-                  { icon: <Users />, title: "Under Dr. Shiv Sarin", text: "Direct clinical training under the world-renowned hepatologist." },
-                  { icon: <Award />, title: "First Bariatric Endoscopist in UP", text: "Pioneered non-surgical weight loss endoscopy in Uttar Pradesh." },
-                  { icon: <ShieldCheck />, title: "Advanced Procedures", text: "Expert in ERCP, EUS, FibroScan, and therapeutic endoscopy." },
+                  { icon: <GraduationCap />, title: "DM from ILBS, New Delhi", text: "Trained at the Institute of Liver & Biliary Sciences under Prof. Dr. Shiv Kumar Sarin — India's leading hepatologist." },
+                  { icon: <Award />, title: "First Bariatric Endoscopist in UP", text: "Trained in Endoscopic Sleeve Gastroplasty (ESG) & Intragastric Balloon — pioneering non-surgical weight loss in Uttar Pradesh." },
+                  { icon: <ShieldCheck />, title: "Advanced Endoscopic Fellowships", text: "Fellowship in Advanced ERCP, Diagnostic & Therapeutic EUS, and Advanced Therapeutic Endoscopy." },
+                  { icon: <Users />, title: "Member, ACG (USA)", text: "Member of the American College of Gastroenterology — globally recognised for excellence in GI care standards." },
+                  { icon: <Stethoscope />, title: "Additional Director, Gastroenterology", text: "Fortis Hospital, Sector 62, Noida — with expertise in fatty liver, cirrhosis, IBS, IBD, GERD, ascites, and complex digestive disorders." },
                 ].map((item, i) => (
                   <li key={i} className="flex gap-4">
                     <div className="shrink-0 w-12 h-12 bg-teal-50 text-teal-600 flex items-center justify-center rounded-2xl">
@@ -610,7 +611,11 @@ function LandingPage() {
             {[
               {
                 title: "Fatty Liver Treatment in Noida",
-                desc: "NAFLD, NASH, and Grade I–III fatty liver diagnosis using FibroScan. Personalised diet + medication plans.",
+                desc: "NAFLD, NASH, and Grade I–III fatty liver diagnosis using FibroScan. Personalised diet + medication plans for complete reversal.",
+              },
+              {
+                title: "Cirrhosis & Liver Disease Management",
+                desc: "Transhepatal cirrhosis, ascites, and advanced liver disorders treated with expert care. Early detection prevents liver failure.",
               },
               {
                 title: "Endoscopy & Colonoscopy in Noida",
@@ -808,16 +813,19 @@ function LandingPage() {
           </h2>
           <div className="prose prose-slate max-w-none text-sm text-slate-500 leading-relaxed space-y-4">
             <p>
-              Dr. Sushrut Singh is a DM-trained gastroenterologist and liver specialist at <strong>Fortis Hospital, Noida</strong>. With over 12 years of clinical experience and the trust of 3,000+ patients across NCR, he provides expert care for a wide range of gastro-intestinal and liver conditions.
+              Dr. Sushrut Singh is a highly experienced <strong>Gastroenterologist & Liver Specialist</strong> and Additional Director of Gastroenterology at <strong>Fortis Hospital, Noida</strong>. With over 12+ years of clinical practice, research, and academic publications in gastroenterology, he provides expert care for a wide range of gastro-intestinal and liver conditions — trusted by 3,000+ patients across Noida, Greater Noida & Ghaziabad.
             </p>
             <p>
-              His qualifications include MBBS, MD from King George Medical College (KGMC), and DM in Hepatology from the Institute of Liver &amp; Biliary Sciences (ILBS), Delhi — where he trained directly under Dr. Shiv Sarin, one of the world&apos;s leading hepatologists. This training allows him to offer DM-level specialist care that most general physicians cannot match.
+              His qualifications include MBBS, MD from King George Medical University (KGMU, Lucknow), and DM in Hepatology from the <strong>Institute of Liver & Biliary Sciences (ILBS), New Delhi</strong> — one of the top liver institutes in India. He trained directly under <strong>Prof. Dr. Shiv Kumar Sarin</strong>, India&apos;s leading hepatologist. He is also a proud member of the <strong>American College of Gastroenterology (ACG)</strong>.
             </p>
             <p>
-              Patients from Noida, Greater Noida, Ghaziabad, and the wider NCR visit for conditions including fatty liver (NAFLD/NASH), chronic GERD, IBS, jaundice, hepatitis B &amp; C, and unexplained abdominal pain. He is also one of the few doctors in Western UP who performs advanced procedures like <strong>ERCP, EUS, FibroScan, and bariatric endoscopy</strong> — all available at Fortis Hospital, Noida.
+              Dr. Sushrut holds multiple advanced fellowships: <strong>Fellowship in Advanced Therapeutic Endoscopic Procedures</strong>, <strong>Fellowship in Advanced ERCP and Diagnostic & Therapeutic EUS</strong>, and <strong>Fellowship in Bariatric Endoscopy</strong> (Intragastric Balloon & Endoscopic Sleeve Gastroplasty). He is the <strong>first Bariatric Endoscopist in Uttar Pradesh</strong>.
             </p>
             <p>
-              95% of patients resolve their condition in a single visit with a clear diagnosis, a written treatment plan, and specific dietary guidance. No unnecessary tests, no repeat visits for billing — just expert gastro care from a Ex-Fortis specialist.
+              Patients from Noida, Greater Noida, Ghaziabad, and the wider NCR visit for conditions including fatty liver (NAFLD/NASH), transhepatal cirrhosis, viral hepatitis, chronic GERD, acidity, IBS, IBD, jaundice, ascites, GI bleed, piles, blood in stools, altered bowel habits, recurrent vomiting, pancreatic disease, gall bladder stones, bile duct stones, intestinal obstruction, and GI cancers. Advanced procedures like <strong>ERCP, EUS, FibroScan, EMR, ESD, and bariatric endoscopy</strong> are all available at Fortis Hospital, Noida.
+            </p>
+            <p>
+              Consultation is available at two convenient locations: <strong>Fortis Hospital, Sector 62, Noida</strong> and <strong>Gaur City Clinic, Greater Noida</strong>. Dr. Sushrut focuses on accurate diagnosis, minimal medication, and a patient-friendly treatment approach — 95% of patients resolve their condition in a single visit.
             </p>
             <div className="mt-10 mb-2">
               {/* Liver Fact Card */}
